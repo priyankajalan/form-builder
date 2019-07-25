@@ -7,12 +7,14 @@ export default function EditableList(){
     const [ appState, setAppState ] = useAppState();
     const [ inputState, setInputState ] = useState("");
     const [ errorState, setErrorState ] = useState(null);
+    
+    const addItem = add();
+    const removeItem = remove();
 
     const onAdd = async (e) => {
         e.preventDefault();
         try{
-            const state = await add(inputState,appState);
-            setAppState(state);
+            await addItem(inputState);
             setInputState("");
             setErrorState(null);
         }catch(e){
@@ -23,8 +25,7 @@ export default function EditableList(){
     const onRemove = (item) => {
         return async() => {
             try{
-                const state = await remove(item,appState);
-                setAppState(state);
+                await removeItem(item)
                 setInputState("");
                 setErrorState(null);
             }catch(e){

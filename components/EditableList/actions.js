@@ -1,44 +1,52 @@
-export const add = async (text, state) => {
-  const items = state.agenda.items.slice();
-  console.log('Add me',items);
-  items.push({ text });
+import { useAppState } from 'components/StateProvider';
 
-  const data = await new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const roll = Math.random();
-      if (roll < 0.5) {
-        resolve({
-          ...state,
-          agenda: {
-            items
+export const add = () => {
+  const [ state, setState ] = useAppState();
+  return async (text) => {
+    const items = state.agenda.items.slice();
+    items.push({ text });
+    const data = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const roll = Math.random();
+          if (roll < 0.5) {
+            resolve({
+              ...state,
+              agenda: {
+                items
+              }
+            });
+          } else {
+            reject(new Error("Failed to add item"));
           }
-        });
-      } else {
-        reject(new Error("Failed to add item"));
-      }
-    }, 1000);
-  });
-  return data;
+        }, 1000);
+      });
+      console.log(data);
+      return setState(data);
+    }
+    
 };
 
-export const remove = async (text,state) => {
-    const data = await new Promise((resolve,reject) => {
-        setTimeout(() => {
-            const roll = Math.random();
-            if(roll<0.5){
-                const items = state.agenda.items.filter(i => {
-                    return i != text;
-                });
-                resolve({
-                    ...state,
-                    agenda:{
-                        items
-                    }
-                })
-            }else{
-                reject(new Error('Cannot delete item'))
-            }
-        }, 1000)
-    })
-    return data;
+export const remove = () => {
+    const [ state, setState ] = useAppState();
+    return async (text) => {
+        const data = await new Promise((resolve,reject) => {
+            setTimeout(() => {
+                const roll = Math.random();
+                if(roll<0.5){
+                    const items = state.agenda.items.filter(item => item != text);
+                    console.log('items',items)
+                    resolve({
+                        ...state,
+                        agenda:{
+                            items
+                        }
+                    })
+                }else{
+                    reject(new Error('Cannot delete item'))
+                }
+            }, 1000)
+        })
+        return setState(data);
+    }
+    
 }
