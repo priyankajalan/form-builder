@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppState } from 'components/StateProvider';
-import { add, remove } from './actions';
+import { init, add, remove } from './actions';
 
 export default function EditableList(){
 
@@ -10,6 +10,10 @@ export default function EditableList(){
     
     const addItem = add();
     const removeItem = remove();
+
+    useEffect(() => {
+        init().then(setAppState)
+    },[])
 
     const onAdd = async (e) => {
         e.preventDefault();

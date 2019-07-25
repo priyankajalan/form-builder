@@ -20,10 +20,8 @@ export const add = () => {
           }
         }, 1000);
       });
-      console.log(data);
       return setState(data);
     }
-    
 };
 
 export const remove = () => {
@@ -34,7 +32,6 @@ export const remove = () => {
                 const roll = Math.random();
                 if(roll<0.5){
                     const items = state.agenda.items.filter(item => item != text);
-                    console.log('items',items)
                     resolve({
                         ...state,
                         agenda:{
@@ -48,5 +45,17 @@ export const remove = () => {
         })
         return setState(data);
     }
-    
+}
+
+export const init = async () => {
+    const data = await new Promise(resolve => {
+        setTimeout(() => {
+            resolve({
+                agenda: {
+                    items: [{ text: 'Apple' },{ text: 'Orange' }]
+                }
+            })
+        }, 1000)
+    })
+    return data;
 }

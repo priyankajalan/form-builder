@@ -6,7 +6,7 @@ class MyApp extends App {
 
     initialState = {
         agenda: {
-            items: [{ text: 'hello' }]
+            items: []
         }
     }
 
