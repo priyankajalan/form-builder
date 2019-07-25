@@ -4,6 +4,12 @@ import StateProvider from '../components/StateProvider';
 
 class MyApp extends App {
 
+    initialState = {
+        agenda: {
+            items: [{ text: 'hello' }]
+        }
+    }
+
     static async getInitialProps({ Component, ctx }){
         let pageProps = {};
         if(Component.getInitialProps){
@@ -16,7 +22,7 @@ class MyApp extends App {
         const { Component, pageProps } = this.props;
         return (
             <Container>
-                <StateProvider initialState={{counter:0}}>
+                <StateProvider initialState={this.initialState}>
                     <Component />
                 </StateProvider>
             </Container>
